@@ -1,38 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import MusicPlayer from './components/MusicPlayer'
+import FeaturedContent from './components/FeaturedContent'
+import ArtistProfiles from './components/ArtistProfiles'
+import Events from './components/Events'
+import Newsletter from './components/Newsletter'
+import Footer from './components/Footer'
 import './App.css'
-import Navbar from './component/Navbar'
-import Card1 from './component/Card1'
-import Verticalnav from './component/Verticalnav'
-import Songs from './component/Songs'
-import {
-  BrowserRouter,
-  
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
-import Latest from './component/Latest'
-import History from './component/History'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentTrack, setCurrentTrack] = useState(null)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   return (
-    <>
     <BrowserRouter>
-      <Navbar />
-      <Verticalnav  />
-      <Routes>
-        <Route  path={'/'} element={<Card1 />}/>
-        <Route path={'/songs'} element={<Songs/>}/>
-        <Route path={"/latest"} element={<Latest />}/>
-        <Route path={"/history"} element={<History />}></Route>
-      </Routes>
-      
-      </BrowserRouter>      
-    </>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={
+            <main className="relative">
+              <Hero />
+              <FeaturedContent 
+                setCurrentTrack={setCurrentTrack}
+                setIsPlaying={setIsPlaying}
+              />
+              <ArtistProfiles />
+              <Events />
+              <Newsletter />
+            </main>
+          } />
+        </Routes>
+        <Footer />
+        
+        {/* Fixed Music Player */}
+        <MusicPlayer 
+          currentTrack={currentTrack}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
+      </div>
+    </BrowserRouter>
   )
 }
 
